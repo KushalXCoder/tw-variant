@@ -1,0 +1,8 @@
+src/
+dist/
+tsconfig.json
+package-lock.json
+.gitignore
+*.test.ts
+index.test.ts
+README.md

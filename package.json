@@ -2,7 +2,7 @@
   "type": "module",
   "name": "tw-variant",
   "version": "0.1.0",
-  "description": "A tiny utility for grouping Tailwind variant prefixes.",
+  "description": "A typescript utility for grouping Tailwind variant prefixes.",
   "keywords": [
     "tailwind",
     "variants",
@@ -13,6 +13,13 @@
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KushalXCoder/tw-variant"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
