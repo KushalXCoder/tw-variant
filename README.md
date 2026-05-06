@@ -17,7 +17,7 @@ import { hv, tv } from "tw-variant"
 
 // Apply variant to multiple classes at once
 hv("bg-blue-500 text-white scale-105", "hover")
-// → "hover:bg-blue-500 hover:text-white hover:scale-105"
+// "hover:bg-blue-500 hover:text-white hover:scale-105"
 
 // Apply multiple variants in one go
 tv({
@@ -25,7 +25,7 @@ tv({
   focus: "ring-2 ring-offset-2",
   dark: "bg-gray-800 text-gray-100"
 })
-// → "hover:bg-blue-500 hover:text-white focus:ring-2 focus:ring-offset-2 dark:bg-gray-800 dark:text-gray-100"
+// "hover:bg-blue-500 hover:text-white focus:ring-2 focus:ring-offset-2 dark:bg-gray-800 dark:text-gray-100"
 ```
 
 ---
@@ -69,12 +69,12 @@ tv({
 ## Compatibility
 
 ### Tailwind CSS Versions
-✅ **All versions** — Works with Tailwind v1, v2, v3, and v4+
+**All versions** — Works with Tailwind v1, v2, v3, and v4+
 
 This library is **version-agnostic**. It's pure string manipulation, so it works wherever Tailwind works.
 
 ### JavaScript Frameworks
-✅ Works with any framework:
+Works with any framework:
 - **React** / **Next.js**
 - **Vue** / **Nuxt**
 - **Svelte** / **SvelteKit**
@@ -84,7 +84,7 @@ This library is **version-agnostic**. It's pure string manipulation, so it works
 - Vanilla JavaScript
 
 ### Build Tools & Runtimes
-✅ Runs on:
+Runs on:
 - **Node.js** 14+
 - **Bun**
 - **Deno**
@@ -92,14 +92,14 @@ This library is **version-agnostic**. It's pure string manipulation, so it works
 - Any environment with JavaScript
 
 ### Package Managers
-✅ Install via:
+Install via:
 - npm
 - yarn
 - pnpm
 - bun
 
 ### Module Formats
-✅ Exports:
+Exports:
 - **ESM** (`dist/index.mjs`) — for modern bundlers and runtimes
 - **CommonJS** (`dist/index.js`) — for Node.js and older environments
 - **TypeScript** (`dist/index.d.ts`) — full type definitions
@@ -166,22 +166,16 @@ Since `hv()` and `tv()` generate classes **at runtime**, Tailwind's JIT scanner 
 ---
 
 ## What This Library Does
-✅ Groups variant prefixes to reduce repetition  
-✅ Works with any Tailwind variant  
-✅ Composes naturally with other utilities  
-✅ Zero dependencies  
-✅ Full TypeScript support  
+- Groups variant prefixes to reduce repetition
+- Works with any Tailwind variant
+- Composes naturally with other utilities
+- Zero dependencies
+- Full TypeScript support
 
 ---
 
 ## What This Library Doesn't Do
-❌ Handle conditional classes (use `clsx` for that)  
-❌ Resolve class conflicts (use `tailwind-merge` for that)  
-❌ Validate class names (Tailwind doesn't either)  
-❌ Replace `cn()` — it's additive only  
-
----
-
-## License
-
-ISC
+- Handle conditional classes (use `clsx` for that)
+- Resolve class conflicts (use `tailwind-merge` for that)
+- Validate class names (Tailwind doesn't either)
+- Replace `cn()` — it's additive only
