@@ -1,0 +1,23 @@
+{
+  "type": "module",
+  "name": "tw-variant",
+  "version": "0.1.0",
+  "description": "A tiny utility for grouping Tailwind variant prefixes.",
+  "keywords": [
+    "tailwind",
+    "variants",
+    "utility"
+  ],
+  "license": "ISC",
+  "author": "Kushal Rathod",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}
