@@ -1,6 +1,21 @@
+<div align="center">
+
+<img src="./assets/logo.svg" width="120" alt="tw-variant logo" />
+
 # tw-variant
 
-A TypeScript utility for grouping Tailwind variant prefixes. **Avoid repeating `hover:`, `focus:`, `dark:` prefixes.**
+<p>
+  A TypeScript utility for grouping Tailwind variant prefixes.<br/>
+  Avoid repeating <code>hover:</code>, <code>focus:</code>, <code>dark:</code> prefixes.
+</p>
+
+<p>
+  <img src="https://img.shields.io/npm/v/tw-variant?style=for-the-badge" />
+  <img src="https://img.shields.io/npm/dm/tw-variant?style=for-the-badge" />
+  <img src="https://img.shields.io/npm/l/tw-variant?style=for-the-badge" />
+</p>
+
+</div>
 
 ---
 
