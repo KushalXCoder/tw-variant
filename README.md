@@ -15,6 +15,8 @@
   <img src="https://img.shields.io/npm/l/tw-variant?style=for-the-badge" />
 </p>
 
+Visit the NPM package here - https://www.npmjs.com/package/tw-variant
+
 </div>
 
 ---
