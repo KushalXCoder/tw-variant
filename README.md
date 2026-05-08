@@ -29,19 +29,18 @@ const buttonStyles = tv({
 
 ## API
 
-### `tv(config, ...extraClasses)`
+### `tv(config)`
 
-Group Tailwind classes by variant and combine them with optional extra class values.
+Group Tailwind classes by variant and return a single class string.
 
 **Parameters:**
 - **`base`** (string, optional): Base classes applied to all states.
 - **`[variant]`** (string): Any Tailwind variant (hover, focus, dark, group-hover, etc.).
-- **`...extraClasses`**: Additional classes or conditional values, handled internally by `tv`.
 
 **Returns:**
-- A string with all variant prefixes applied and all extra classes merged.
+- A string with all variant prefixes applied.
 
-**Note:** `tv` already uses `cn` internally, so you do not need to call `cn` explicitly for its base/variant merge.
+**Note:** `tv` uses `cn` internally for its own merge, so you do not need to call `cn` explicitly for `base` + variant grouping.
 
 ---
 
@@ -78,16 +77,20 @@ This is especially useful for reusable component styles and design system tokens
 
 ## Conditional and extra classes
 
+For extra conditional or dynamic classes, keep `tv` focused on variant grouping and use `cn` externally:
+
 ```tsx
-className={tv({
-  base: "px-4 py-2 rounded",
-  hover: "bg-blue-500 shadow-lg"
-},
-isDisabled && "opacity-50 cursor-not-allowed",
-customClass)}
+className={cn(
+  tv({
+    base: "px-4 py-2 rounded",
+    hover: "bg-blue-500 shadow-lg"
+  }),
+  isDisabled && "opacity-50 cursor-not-allowed",
+  customClass
+)}
 ```
 
-This works without requiring `cn()` explicitly because `tv` merges extra classes internally.
+This keeps `tv` simple while still letting you combine its output with other class values.
 
 ---
 
@@ -115,10 +118,10 @@ Works in any framework:
 
 ## Why tv-variant?
 
-✅ **Single API** — only `tv`  
-✅ **Less repetition** — group variant classes  
-✅ **Clearer code** — easier to read and maintain  
-✅ **Reusable patterns** — define variants once and reuse them
+- **Single API** — only `tv`  
+- **Less repetition** — group variant classes  
+- **Clearer code** — easier to read and maintain  
+- **Reusable patterns** — define variants once and reuse them
 
 import { hv, tv } from "tw-variant"
 
