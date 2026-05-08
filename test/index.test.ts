@@ -1,102 +1,92 @@
 /*
-This file contains tests for the hv() and tv() functions. Run this file to verify that all tests pass.
-You can add some extra test if something is missed
-Or if some new feature is added, you can add tests for it here as well.
+This file contains tests for the tv() function. Run this file to verify that all tests pass.
+You can add more tests if something is missed or if new features are added.
 */
 
-import { hv, tv, type VariantMap } from "../src/index.ts";
-
-// Test hv() function
-console.log("Testing hv()");
-
-// Basic usage
-console.assert(
-  hv("bg-blue-500 text-white") === "bg-blue-500 text-white",
-  "Basic usage should return classes unchanged"
-);
-
-// Custom variant
-console.assert(
-  hv("ring-2 ring-offset-2", "focus") === "focus:ring-2 focus:ring-offset-2",
-  "Custom variant should work"
-);
-
-// Group hover
-console.assert(
-  hv("opacity-100", "group-hover") === "group-hover:opacity-100",
-  "group-hover variant should work"
-);
-
-// Edge case: empty classes
-console.assert(
-  hv("") === "",
-  "Empty classes should return empty string"
-);
-
-// Edge case: only spaces
-console.assert(
-  hv("   ") === "",
-  "Whitespace-only classes should return empty string"
-);
-
-// Edge case: empty variant (should return classes unchanged)
-console.assert(
-  hv("bg-red-500", "") === "bg-red-500",
-  "Empty variant should return classes unchanged"
-);
-
-// Edge case: multiple spaces between classes
-console.assert(
-  hv("bg-red-500   text-white") === "bg-red-500 text-white",
-  "Multiple spaces should be normalized"
-);
-
-// Edge case: leading/trailing spaces
-console.assert(
-  hv("  bg-red-500 text-white  ") === "bg-red-500 text-white",
-  "Leading/trailing spaces should be trimmed"
-);
-
-// Edge case: single class
-console.assert(
-  hv("bg-blue-500") === "bg-blue-500",
-  "Single class should work"
-);
+import { tv } from "../src/index.ts";
 
 // Test tv() function
 console.log("Testing tv()");
 
-// Basic usage
+// Basic usage with base classes
+console.assert(
+  tv({ base: "px-4 py-2" }) === "px-4 py-2",
+  "Base classes should be returned"
+);
+
+// Single variant
+console.assert(
+  tv({ hover: "bg-blue-500" }).includes("hover:bg-blue-500"),
+  "Single variant should work"
+);
+
+// Multiple variants
 const result1 = tv({
+  base: "px-4 py-2",
   hover: "bg-blue-500 text-white",
   focus: "ring-2 ring-offset-2"
 });
 console.assert(
+  result1.includes("px-4") && 
   result1.includes("hover:bg-blue-500") && 
   result1.includes("focus:ring-2"),
-  "Multiple variants should work"
+  "Multiple variants with base should work"
 );
 
-// Edge case: empty object
+// Edge case: empty config
 console.assert(
   tv({}) === "",
-  "Empty object should return empty string"
+  "Empty config should return empty string"
 );
 
-// Edge case: empty class values
+// Edge case: only base classes
+console.assert(
+  tv({ base: "px-4 py-2 rounded" }) === "px-4 py-2 rounded",
+  "Only base classes should work"
+);
+
+// Edge case: variant with multiple classes
 const result2 = tv({
-  hover: "",
-  focus: "ring-2"
+  hover: "shadow-lg opacity-90"
 });
 console.assert(
-  result2 === "focus:ring-2",
-  "Empty class values should be filtered out"
+  result2.includes("hover:shadow-lg") && result2.includes("hover:opacity-90"),
+  "Multiple classes in variant should all get prefix"
 );
 
 // Edge case: all empty values
 console.assert(
-  tv({ hover: "", focus: "" }) === "",
+  tv({ base: "", hover: "", focus: "" }) === "",
   "All empty values should return empty string"
+);
+
+// Real-world use case: button styles
+const buttonStyles = tv({
+  base: "px-4 py-2 rounded font-medium",
+  hover: "opacity-90 shadow-lg",
+  focus: "ring-2 ring-offset-2",
+  active: "scale-95"
+});
+console.assert(
+  buttonStyles.includes("px-4") &&
+  buttonStyles.includes("hover:opacity-90") &&
+  buttonStyles.includes("focus:ring-2") &&
+  buttonStyles.includes("active:scale-95"),
+  "Real-world button styles should work"
+);
+
+// Complex use case: dark mode + hover + focus
+const complexStyles = tv({
+  base: "p-4 rounded border",
+  hover: "shadow-md bg-gray-50",
+  focus: "ring-2 ring-blue-500",
+  dark: "dark:bg-gray-900 dark:text-white"
+});
+console.assert(
+  complexStyles.includes("p-4") &&
+  complexStyles.includes("hover:shadow-md") &&
+  complexStyles.includes("dark:bg-gray-900"),
+  "Complex variants with dark mode should work"
 );
 
 // Edge case: single variant

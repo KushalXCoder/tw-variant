@@ -75,4 +75,4 @@ const tv = (
     return cn(base, variantsResult);
 }
 
-export { hv, tv };
+export { tv };
