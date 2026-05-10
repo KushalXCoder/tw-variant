@@ -36,7 +36,8 @@ const buttonStyles = tv({
   base: "px-4 py-2 rounded font-medium",
   hover: "bg-blue-600 shadow-lg",
   focus: "ring-2 ring-offset-2",
-  active: "scale-95"
+  active: "scale-95",
+  groupHover: "opacity-90"
 })
 
 <button className={buttonStyles}>Click me</button>
@@ -52,12 +53,12 @@ Group Tailwind classes by variant and return a single class string.
 
 **Parameters:**
 - **`base`** (string, optional): Base classes applied to all states.
-- **`[variant]`** (string): Any Tailwind variant (hover, focus, dark, group-hover, etc.).
+- **`[variant]`** (string): Any Tailwind variant (hover, focus, dark, group-hover, etc.). Prefer camelCase keys like `groupHover` for hyphenated variants so quotes are not required.
 
 **Returns:**
 - A string with all variant prefixes applied.
 
-**Note:** `tv` uses `cn` internally for its own merge, so you do not need to call `cn` explicitly for `base` + variant grouping.
+**Note:** `tv` has no runtime dependencies and returns a plain class string.
 
 ---
 
@@ -94,20 +95,24 @@ This is especially useful for reusable component styles and design system tokens
 
 ## Conditional and extra classes
 
-For extra conditional or dynamic classes, keep `tv` focused on variant grouping and use `cn` externally:
+For extra conditional or dynamic classes, keep `tv` focused on variant grouping and compose it with `clsx`:
 
 ```tsx
-className={cn(
-  tv({
-    base: "px-4 py-2 rounded",
-    hover: "bg-blue-500 shadow-lg"
-  }),
+import clsx from "clsx";
+
+const classVariants = tv({
+  base: "px-4 py-2 rounded",
+  hover: "bg-blue-500 shadow-lg"
+});
+
+className={clsx(
+  classVariants,
   isDisabled && "opacity-50 cursor-not-allowed",
   customClass
 )}
 ```
 
-This keeps `tv` simple while still letting you combine its output with other class values.
+Install `clsx` if you need a lightweight utility for conditional class composition.
 
 ---
 
@@ -135,14 +140,16 @@ Works in any framework:
 
 ## Why tv-variant?
 
-- **Single API** — only `tv`  
-- **Less repetition** — group variant classes  
-- **Clearer code** — easier to read and maintain  
+- **Single API** — only `tv`
+- **Less repetition** — group variant classes
+- **Clearer code** — easier to read and maintain
 - **Reusable patterns** — define variants once and reuse them
 
-import { hv, tv } from "tw-variant"
+```tsx
+import { tv } from "tw-variant";
+import clsx from "clsx";
 
-<div className={cn(
+<div className={clsx(
   "p-4 rounded-lg border transition-all",
   tv({
     hover: "shadow-lg",
@@ -185,7 +192,7 @@ Since `hv()` and `tv()` generate classes **at runtime**, Tailwind's JIT scanner 
 ---
 
 ## What This Library Doesn't Do
-- Handle conditional classes (use `clsx` for that)
-- Resolve class conflicts (use `tailwind-merge` for that)
+- Handle conditional classes (use plain JavaScript or your own helper for that)
+- Resolve class conflicts (use `tailwind-merge` or another conflict resolver if needed)
 - Validate class names (Tailwind doesn't either)
 - Replace `cn()` — it's additive only
