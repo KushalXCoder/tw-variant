@@ -100,10 +100,10 @@ const result3 = tv({
   hover: "bg-blue-500",
   focus: "ring-2",
   dark: "bg-gray-800",
-  "group-hover": "opacity-100"
+  groupHover: "opacity-100"
 });
 console.assert(
-  result3.split(" ").length === 4,
+  result3.split(" ").length === 4 && result3.includes("group-hover:opacity-100"),
   "Many variants should produce correct count"
 );
 

@@ -1,5 +1,3 @@
-import { cn } from "./utils.ts";
-
 // Type definitions
 export type VariantMap = Record<string, string>;
 
@@ -39,6 +37,12 @@ const hv = (classes: string, variant?: string): string => {
         .join(" ")
 }
 
+const normalizeVariant = (variant: string): string =>
+    variant
+        .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+        .replace(/_/g, "-")
+        .toLowerCase();
+
 /**
  * Apply multiple Tailwind variant prefixes at once.
  * Groups classes by variant to avoid repetition.
@@ -58,9 +62,10 @@ const hv = (classes: string, variant?: string): string => {
  * tv({ 
  *   hover: "opacity-90 shadow-lg",
  *   focus: "ring-2 ring-offset-2",
- *   active: "scale-95"
+ *   active: "scale-95",
+ *   groupHover: "opacity-90"
  * })
- * // "hover:opacity-90 hover:shadow-lg focus:ring-2 focus:ring-offset-2 active:scale-95"
+ * // "hover:opacity-90 hover:shadow-lg focus:ring-2 focus:ring-offset-2 active:scale-95 group-hover:opacity-90"
  */
 const tv = (
     config: VariantMap & { base?: string }
@@ -68,11 +73,14 @@ const tv = (
     const { base = "", ...variants } = config;
     
     const variantsResult = Object.entries(variants)
-        .map(([variant, classes]) => hv(classes, variant))
+        .map(([variant, classes]) => hv(classes, normalizeVariant(variant)))
         .filter(Boolean)
         .join(" ");
     
-    return cn(base, variantsResult);
+    if (base.trim() && variantsResult) {
+        return base.trim() + " " + variantsResult;
+    }
+    return base.trim() || variantsResult;
 }
 
 export { tv };
