@@ -32,6 +32,10 @@
     "test": "tsx test/index.test.ts"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/types": "^7.29.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^25.7.0",
     "tsup": "^8.5.1",
     "tsx": "^4.7.0",
     "typescript": "^6.0.3"
