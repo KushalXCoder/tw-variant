@@ -21,6 +21,18 @@ Visit the NPM package here - https://www.npmjs.com/package/tw-variant
 
 ---
 
+**Current Status — Proof of Concept**
+
+This package currently generates classes at runtime, which means Tailwind's JIT scanner cannot detect them at build time. The classes will not work in production as-is.
+
+This was a mistake in how the README was framed — the limitation was documented but the package was still presented as a working solution. That was wrong.
+
+A build-time solution is actively in progress that will properly handle class generation before Tailwind scans your files — making it work everywhere with zero runtime dependencies. This README will be updated when it's ready.
+
+For now, treat this as a **proof of concept for the API design**.
+
+---
+
 ## Install
 
 ```sh
@@ -138,7 +150,7 @@ Works in any framework:
 
 ---
 
-## Why tv-variant?
+## Why tw-variant?
 
 - **Single API** — only `tv`
 - **Less repetition** — group variant classes
@@ -178,7 +190,9 @@ export const cardClasses = tv(cardHover)
 
 ## Important: Tailwind Scanning
 
-Since `hv()` and `tv()` generate classes **at runtime**, Tailwind's JIT scanner may not detect them during build time.
+Since `tv()` generates classes at runtime, Tailwind's JIT scanner cannot detect them during build time. This means the generated variant classes will not appear in your final CSS.
+
+A build-time plugin is in progress to solve this properly. Until then, this package should be considered a proof of concept.
 
 ---
 
@@ -186,13 +200,13 @@ Since `hv()` and `tv()` generate classes **at runtime**, Tailwind's JIT scanner 
 - Groups variant prefixes to reduce repetition
 - Works with any Tailwind variant
 - Composes naturally with other utilities
-- Zero dependencies
+- Zero runtime dependencies
 - Full TypeScript support
 
 ---
 
 ## What This Library Doesn't Do
-- Handle conditional classes (use plain JavaScript or your own helper for that)
-- Resolve class conflicts (use `tailwind-merge` or another conflict resolver if needed)
+- Handle conditional classes (use `clsx` for that)
+- Resolve class conflicts (use `tailwind-merge` if needed)
 - Validate class names (Tailwind doesn't either)
 - Replace `cn()` — it's additive only
