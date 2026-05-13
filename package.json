@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "tw-variant",
-  "version": "2.0.0",
+  "version": "2.2.0",
   "description": "A typescript utility for grouping Tailwind variant prefixes.",
   "keywords": [
     "tailwind",
@@ -41,6 +41,6 @@
     "typescript": "^6.0.3"
   },
   "bin": {
-    "tw-variant-extract": "./extractor.cjs"
+    "tw-variant-extract": "node extractor.cjs"
   }
 }

@@ -8,7 +8,7 @@ const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 
 const SRC_GLOB = '**/*.{ts,tsx}';
-const OUT_FILE = path.resolve(__dirname, '.tw-variant-generated.txt');
+const OUT_FILE = path.resolve(process.cwd(), '.tw-variant-generated.txt');
 
 function extractTvClassesFromFile(filePath) {
   const code = fs.readFileSync(filePath, 'utf8');
