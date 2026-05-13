@@ -156,7 +156,7 @@ Install `clsx` if you need a lightweight utility for conditional class compositi
 ## Compatibility
 
 ### Tailwind CSS Versions
-Works with Tailwind v1, v2, v3, and v4+.
+Works with Tailwind v4+
 
 ### JavaScript Frameworks
 Works in any framework:
@@ -166,12 +166,6 @@ Works in any framework:
 - Solid.js
 - Angular
 - Vanilla JavaScript
-
-### Runtimes
-- Node.js 14+
-- Bun
-- Deno
-- Modern browsers (ESM)
 
 ---
 
@@ -222,77 +216,6 @@ export const cardClasses = tv(cardHover)
 - The included extractor script scans your codebase for all `tv({ ... })` calls and writes every possible class to a generated file.
 - Tailwind scans this generated file and includes all the necessary CSS in your build.
 - No runtime hacks, no SSR required—everything is static and build-time safe.
-
----
-
-## Extraction & Tailwind Integration
-
-### 1. **Run the extractor**
-
-Add a script to your `package.json`:
-
-```json
-"scripts": {
-  "tw-variant:extract": "tw-variant-extract"
-}
-```
-
-Or run manually:
-
-```bash
-npx tw-variant-extract
-```
-
-This generates `.tw-variant-generated.txt` in your project root (or a hidden subfolder if you configure it).
-
-### 2. **Tell Tailwind to scan the generated file**
-
-- **If you have `tailwind.config.js`:**
-
-  ```js
-  module.exports = {
-    content: [
-      './src/**/*.{js,ts,jsx,tsx}',
-      './.tw-variant-generated.txt',
-    ],
-    // ...rest of config
-  }
-  ```
-
-- **If using Tailwind v4+ with no config:**
-
-  Add to your main CSS:
-  ```css
-  @source "./.tw-variant-generated.txt";
-  ```
-
-### 3. **(Recommended) Watch for changes**
-
-Install a watcher:
-```bash
-npm install --save-dev nodemon
-```
-
-Add to your `package.json`:
-```json
-"scripts": {
-  "tw-variant:watch": "nodemon --watch src --ext ts,tsx,js,jsx --exec \"npx tw-variant-extract\""
-}
-```
-
-Run in a separate terminal:
-```bash
-npm run tw-variant:watch
-```
-
----
-
-## Production Usage
-
-- **Always run the extractor before your production Tailwind build.**
-- The generated file ensures all your dynamic classes are included in the final CSS.
-- No runtime or SSR is required for Tailwind to generate the CSS.
-- The process is static and build-time only.
 
 ---
 
