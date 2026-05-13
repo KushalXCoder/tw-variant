@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "ignoreDeprecations": "6.0",
     "noEmit": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "types": ["node"]
   },
   "include": ["src", "test/index.test.ts"]
 }

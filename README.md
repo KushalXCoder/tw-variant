@@ -19,25 +19,50 @@ Visit the NPM package here - https://www.npmjs.com/package/tw-variant
 
 </div>
 
----
 
-**Current Status — Proof of Concept**
+## Getting Started (Setup & Build Steps)
 
-This package currently generates classes at runtime, which means Tailwind's JIT scanner cannot detect them at build time. The classes will not work in production as-is.
-
-This was a mistake in how the README was framed — the limitation was documented but the package was still presented as a working solution. That was wrong.
-
-A build-time solution is actively in progress that will properly handle class generation before Tailwind scans your files — making it work everywhere with zero runtime dependencies. This README will be updated when it's ready.
-
-For now, treat this as a **proof of concept for the API design**.
-
----
-
-## Install
+### 1. Install
 
 ```sh
 npm install tw-variant
 ```
+
+### 2. Tell Tailwind to scan the generated file
+
+  Add to your main CSS:
+  ```css
+  @source "./.tw-variant-generated.txt";
+  ```
+
+### 3. Watch for changes
+
+Install a watcher:
+```bash
+npm install --save-dev nodemon
+```
+
+In your `package.json`:
+
+```json
+"scripts": {
+  "tw-variant:watch": "npx nodemon --watch src --watch app --ext ts,tsx --exec \"node ./node_modules/tw-variant/extractor.cjs\""
+}
+```
+
+Run in a separate terminal:
+```bash
+npm run tw-variant:watch
+```
+
+### 5. Production Usage
+
+- **Always run the extractor before your production Tailwind build.**
+- The generated file ensures all your dynamic classes are included in the final CSS.
+- No runtime or SSR is required for Tailwind to generate the CSS.
+- The process is static and build-time only.
+
+---
 
 ## Quick Usage
 
@@ -188,11 +213,114 @@ export const cardClasses = tv(cardHover)
 
 ---
 
-## Important: Tailwind Scanning
 
-Since `tv()` generates classes at runtime, Tailwind's JIT scanner cannot detect them during build time. This means the generated variant classes will not appear in your final CSS.
+---
 
-A build-time plugin is in progress to solve this properly. Until then, this package should be considered a proof of concept.
+## How It Works (Extractor-based, Production-Ready)
+
+- Use the `tv()` function to define Tailwind class variants in a readable, JS-valid way.
+- The included extractor script scans your codebase for all `tv({ ... })` calls and writes every possible class to a generated file.
+- Tailwind scans this generated file and includes all the necessary CSS in your build.
+- No runtime hacks, no SSR required—everything is static and build-time safe.
+
+---
+
+## Extraction & Tailwind Integration
+
+### 1. **Run the extractor**
+
+Add a script to your `package.json`:
+
+```json
+"scripts": {
+  "tw-variant:extract": "tw-variant-extract"
+}
+```
+
+Or run manually:
+
+```bash
+npx tw-variant-extract
+```
+
+This generates `.tw-variant-generated.txt` in your project root (or a hidden subfolder if you configure it).
+
+### 2. **Tell Tailwind to scan the generated file**
+
+- **If you have `tailwind.config.js`:**
+
+  ```js
+  module.exports = {
+    content: [
+      './src/**/*.{js,ts,jsx,tsx}',
+      './.tw-variant-generated.txt',
+    ],
+    // ...rest of config
+  }
+  ```
+
+- **If using Tailwind v4+ with no config:**
+
+  Add to your main CSS:
+  ```css
+  @source "./.tw-variant-generated.txt";
+  ```
+
+### 3. **(Recommended) Watch for changes**
+
+Install a watcher:
+```bash
+npm install --save-dev nodemon
+```
+
+Add to your `package.json`:
+```json
+"scripts": {
+  "tw-variant:watch": "nodemon --watch src --ext ts,tsx,js,jsx --exec \"npx tw-variant-extract\""
+}
+```
+
+Run in a separate terminal:
+```bash
+npm run tw-variant:watch
+```
+
+---
+
+## Production Usage
+
+- **Always run the extractor before your production Tailwind build.**
+- The generated file ensures all your dynamic classes are included in the final CSS.
+- No runtime or SSR is required for Tailwind to generate the CSS.
+- The process is static and build-time only.
+
+---
+
+## FAQ
+
+**Q: Why do I need the generated file?**
+A: Tailwind only generates CSS for classes it can see at build time. The extractor ensures all your `tv()` classes are visible to Tailwind.
+
+**Q: Can I hide the generated file?**
+A: Yes! It’s already dot-prefixed (hidden on most systems). Add it to `.gitignore` so it’s not committed.
+
+**Q: Can I change the output location?**
+A: You can, but you must update your Tailwind config or CSS to match the new path.
+
+**Q: Do I need SSR for this to work?**
+A: No. All extraction and CSS generation happens at build time.
+
+---
+
+## Summary of Steps
+
+1. Install `tw-variant`.
+2. Use `tv()` in your code.
+3. Run the extractor (manually or with a watcher) before building Tailwind.
+4. Make Tailwind scan the generated file.
+5. Build your project as usual—your dynamic classes will work in production!
+
+---
 
 ---
 

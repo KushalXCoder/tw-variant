@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "tw-variant",
-  "version": "1.2.0",
+  "version": "2.2.1",
   "description": "A typescript utility for grouping Tailwind variant prefixes.",
   "keywords": [
     "tailwind",
@@ -25,15 +25,22 @@
     "url": "https://github.com/KushalXCoder/tw-variant"
   },
   "files": [
-    "dist"
+    "dist",
+    "extractor.cjs"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
-    "test": "tsx test/index.test.ts"
+    "test": "tsx test/index.test.ts",
+    "extract": "node extractor.cjs"
   },
   "devDependencies": {
+    "@types/node": "^25.7.0",
+    "glob": "^10.3.10",
     "tsup": "^8.5.1",
     "tsx": "^4.7.0",
     "typescript": "^6.0.3"
+  },
+  "bin": {
+    "tw-variant-extract": "node extractor.cjs"
   }
 }
