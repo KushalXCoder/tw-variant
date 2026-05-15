@@ -46,9 +46,11 @@ function extractTvClassesFromFile(filePath: string): string[] {
         }
     }
 
-    if (found) {
-        console.log(`[tw-variant] Found tv() in: ${filePath}`)
-    }
+    // Add this later if required in the console for better user experience
+    
+    // if (found) {
+    //     console.log(`[tw-variant] Found tv() in: ${filePath}`)
+    // }
 
     return classes.filter(cls => !/^[a-zA-Z0-9_-]+:$/.test(cls))
 }

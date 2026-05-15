@@ -30,14 +30,6 @@ export type VariantMap = Record<string, string>;
 const tv = (
     config: VariantMap & { base?: string }
 ): string => {
-    if (process.env.NODE_ENV === "development") {
-        console.warn(
-            "[tw-variant] tv() is running at runtime. " +
-            "Add the Babel plugin to make it work with Tailwind's scanner. " +
-            "See https://github.com/KushalXCoder/tw-variant#babel-plugin"
-        );
-    }
-
     const { base = "", ...variants } = config;
     
     const variantsResult = Object.entries(variants)
