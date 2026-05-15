@@ -3,7 +3,7 @@ This file contains tests for the tv() function. Run this file to verify that all
 You can add more tests if something is missed or if new features are added.
 */
 
-import { tv } from "../src/index.ts";
+import { tv } from "../index.ts";
 
 // Test tv() function
 console.log("Testing tv()");
