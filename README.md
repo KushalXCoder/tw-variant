@@ -22,6 +22,7 @@ Visit the NPM package here - https://www.npmjs.com/package/tw-variant
 
 ## Getting Started (Setup & Build Steps)
 
+
 ### 1. Install
 
 ```sh
@@ -61,6 +62,24 @@ npm run tw-variant:watch
 - The generated file ensures all your dynamic classes are included in the final CSS.
 - No runtime or SSR is required for Tailwind to generate the CSS.
 - The process is static and build-time only.
+
+```json
+// For NextJS, add this in your script
+
+"scripts": {
+  "build": "tw-variant:extract && next build",
+  "tw-variant:extract": "npx nodemon --exec \"node ./node_modules/tw-variant/extractor.cjs\""
+}
+```
+
+```json
+// For Vite, add this in your script
+
+"scripts": {
+  "build": "tw-variant:extract && vite build"
+  "tw-variant:extract": "npx nodemon --exec \"node ./node_modules/tw-variant/extractor.cjs\""
+}
+```
 
 ---
 
