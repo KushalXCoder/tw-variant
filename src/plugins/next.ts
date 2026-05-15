@@ -12,7 +12,7 @@ export function withTwVariant(nextConfig: NextConfig = {}): NextConfig {
     persistent: true,
     ignoreInitial: true
   })
-  .on('all', (filepath) => {
+  .on('all', (_, filepath) => {
     if (/\.(ts|tsx|js|jsx)$/.test(filepath)) {
       runExtractor()
     }
