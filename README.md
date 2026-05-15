@@ -19,9 +19,9 @@ Visit the NPM package here - https://www.npmjs.com/package/tw-variant
 
 </div>
 
+---
 
-## Getting Started (Setup & Build Steps)
-
+## Getting Started
 
 ### 1. Install
 
@@ -31,62 +31,85 @@ npm install tw-variant
 
 ### 2. Tell Tailwind to scan the generated file
 
-  Add to your main CSS:
-  ```css
-  @source "./.tw-variant-generated.txt";
-  ```
+Add to your main CSS:
 
-### 3. Watch for changes
-
-Install a watcher:
-```bash
-npm install --save-dev nodemon
+```css
+@source "./.tw-variant-generated.txt";
 ```
 
-In your `package.json`:
+### 3. Set up your framework plugin
 
-```json
-"scripts": {
-  "tw-variant:watch": "npx nodemon --watch src --watch app --ext ts,tsx --exec \"node ./node_modules/tw-variant/extractor.cjs\""
+#### Next.js
+
+In your `next.config.ts`:
+
+```ts
+import { withTwVariant } from 'tw-variant/next';
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  // your existing config
 }
+
+module.exports = withTwVariant(nextConfig);
 ```
 
-Run in a separate terminal:
+The extractor runs automatically on dev start and before every production build. No separate terminal, no extra scripts.
+
+---
+
+#### Vite (React, Vue, Svelte, SolidJS, Nuxt, SvelteKit, Astro)
+
+In your `vite.config.ts`:
+
+```ts
+import { twVariant } from 'tw-variant/vite';
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  plugins: [twVariant()]
+});
+```
+
+Same as Next.js - extractor runs automatically on dev start and on every build.
+
+---
+
+#### Manual (any other setup)
+
+If you're not using Next.js or Vite, run the extractor manually:
+
 ```bash
-npm run tw-variant:watch
+# run once
+npx tw-variant-extract
+
+# watch for changes during development
+npx tw-variant-extract --watch
 ```
 
-### 5. Production Usage
-
-- **Always run the extractor before your production Tailwind build.**
-- The generated file ensures all your dynamic classes are included in the final CSS.
-- No runtime or SSR is required for Tailwind to generate the CSS.
-- The process is static and build-time only.
+Or add to your `package.json` scripts:
 
 ```json
-// For NextJS, add this in your script
-
 "scripts": {
-  "build": "tw-variant:extract && next build",
-  "tw-variant:extract": "npx nodemon --exec \"node ./node_modules/tw-variant/extractor.cjs\""
-}
-```
-
-```json
-// For Vite, add this in your script
-
-"scripts": {
-  "build": "tw-variant:extract && vite build"
-  "tw-variant:extract": "npx nodemon --exec \"node ./node_modules/tw-variant/extractor.cjs\""
+  "dev": "tw-variant-extract --watch & your-dev-command",
+  "build": "tw-variant-extract && your-build-command"
 }
 ```
 
 ---
 
+## How It Works
+
+- `tv()` groups your Tailwind classes by variant in a readable object.
+- The included extractor scans your codebase for all `tv({...})` calls and writes every expanded class to `.tw-variant-generated.txt`.
+- Tailwind scans that file and includes all the necessary CSS in your build.
+- The Next.js and Vite plugins run the extractor automatically — no manual steps needed.
+- No runtime hacks, no SSR required — everything is static and build-time safe.
+
 ## Quick Usage
 
 ```ts
-import { tv } from "tw-variant"
+import { tv } from "tw-variant";
 
 const buttonStyles = tv({
   base: "px-4 py-2 rounded font-medium",
@@ -177,14 +200,17 @@ Install `clsx` if you need a lightweight utility for conditional class compositi
 ### Tailwind CSS Versions
 Works with Tailwind v4+
 
-### JavaScript Frameworks
-Works in any framework:
-- React / Next.js
-- Vue / Nuxt
-- Svelte / SvelteKit
-- Solid.js
-- Angular
-- Vanilla JavaScript
+### Framework Support
+
+| Framework | Setup |
+|---|---|
+| Next.js | `tw-variant` - `withTwVariant()` in `next.config.ts` |
+| Vite + React | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
+| Vue / Nuxt | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
+| Svelte / SvelteKit | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
+| Solid.js / SolidStart | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
+| Astro | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
+| Any other | `npx tw-variant-extract` CLI |
 
 ---
 
@@ -210,6 +236,7 @@ import clsx from "clsx";
 ```
 
 ### Reusable variant configs
+
 ```ts
 // design-system/variants.ts
 import { tv, type VariantMap } from "tw-variant"
@@ -226,43 +253,45 @@ export const cardClasses = tv(cardHover)
 
 ---
 
-
----
-
-## How It Works (Extractor-based, Production-Ready)
-
-- Use the `tv()` function to define Tailwind class variants in a readable, JS-valid way.
-- The included extractor script scans your codebase for all `tv({ ... })` calls and writes every possible class to a generated file.
-- Tailwind scans this generated file and includes all the necessary CSS in your build.
-- No runtime hacks, no SSR required—everything is static and build-time safe.
-
----
-
 ## FAQ
 
 **Q: Why do I need the generated file?**
 A: Tailwind only generates CSS for classes it can see at build time. The extractor ensures all your `tv()` classes are visible to Tailwind.
 
 **Q: Can I hide the generated file?**
-A: Yes! It’s already dot-prefixed (hidden on most systems). Add it to `.gitignore` so it’s not committed.
+A: Yes. Add `.tw-variant-generated.txt` to your `.gitignore` — it gets regenerated automatically on every dev start and build.
 
-**Q: Can I change the output location?**
-A: You can, but you must update your Tailwind config or CSS to match the new path.
+**Q: Do I need to run any extra scripts?**
+A: No — if you use the Next.js or Vite plugin, everything runs automatically. For other setups use the CLI.
+
+**Q: Does it support dynamic class values?**
+A: No. `tv()` only works with static string values known at build time. For dynamic classes use `clsx` alongside `tv()`.
 
 **Q: Do I need SSR for this to work?**
 A: No. All extraction and CSS generation happens at build time.
 
 ---
 
-## Summary of Steps
+## Limitations
 
-1. Install `tw-variant`.
-2. Use `tv()` in your code.
-3. Run the extractor (manually or with a watcher) before building Tailwind.
-4. Make Tailwind scan the generated file.
-5. Build your project as usual—your dynamic classes will work in production!
+`tv()` only supports static string values. Dynamic values cannot be extracted at build time.
 
----
+```ts
+// ✅ works
+tv({ hover: "bg-blue-500 text-white" })
+
+// ❌ won't work — dynamic value
+tv({ hover: isActive ? "bg-blue-500" : "bg-red-500" })
+```
+
+For dynamic classes, use `clsx` alongside `tv()`:
+
+```ts
+className={clsx(
+  tv({ base: "px-4 py-2 rounded" }),
+  isActive && "bg-blue-500"
+)}
+```
 
 ---
 

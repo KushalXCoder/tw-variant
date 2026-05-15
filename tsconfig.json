@@ -12,5 +12,5 @@
     "allowImportingTsExtensions": true,
     "types": ["node"]
   },
-  "include": ["src", "test/index.test.ts"]
+  "include": ["src", "src/test/index.test.ts"]
 }
