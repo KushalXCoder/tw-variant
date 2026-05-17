@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "tw-variant",
-  "version": "2.4.2",
+  "version": "2.5.0",
   "description": "A typescript utility for grouping Tailwind variant prefixes.",
   "keywords": [
     "tailwind",
