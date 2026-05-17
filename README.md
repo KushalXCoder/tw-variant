@@ -96,6 +96,17 @@ Or add to your `package.json` scripts:
 }
 ```
 
+## Editor Support
+
+For Tailwind class autocomplete inside tv(), add this to your VS Code settings.json:
+
+```ts
+{
+  "tailwindCSS.experimental.classRegex": [
+    ["tv\\(([^)]*)\\)", "\"([^\"]*)\"|'([^']*)'|`([^`]*)`"]
+  ]
+}
+```
 ---
 
 ## How It Works
