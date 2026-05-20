@@ -70,7 +70,7 @@ export function runExtractor(): void {
     }
 
     fs.writeFileSync(OUT_FILE, Array.from(classSet).join('\n'))
-    console.log(`[tw-variant] Extracted ${classSet.size} classes to ${OUT_FILE}`)
+    // console.log(`[tw-variant] Extracted ${classSet.size} classes to ${OUT_FILE}`)
 }
 
 

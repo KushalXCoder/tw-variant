@@ -11,7 +11,7 @@ const dirsArg = process.argv.find(a => a.startsWith('--dirs='));
 const dirs = dirsArg ? dirsArg.replace('--dirs=', '').split(',') : ['.'];
 
 if (isWatch) {
-  console.log(`[tw-variant] Watching ${dirs.join(', ')} for changes...`);
+  // console.log(`[tw-variant] Watching ${dirs.join(', ')} for changes...`);
 
   chokidar.watch(dirs, {
     ignored: /(node_modules|dist|\.next|\.git)/,
