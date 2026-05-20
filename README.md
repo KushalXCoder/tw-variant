@@ -128,7 +128,7 @@ const buttonStyles = tv({
   focus: "ring-2 ring-offset-2",
   active: "scale-95",
   groupHover: "opacity-90"
-})
+});
 
 <button className={buttonStyles}>Click me</button>
 ```
@@ -159,7 +159,7 @@ tv({
   base: "px-4 py-2 rounded",
   hover: "bg-blue-500 text-white shadow-lg",
   focus: "ring-2 ring-offset-2 outline-none"
-})
+});
 
 // Output:
 // "px-4 py-2 rounded hover:bg-blue-500 hover:text-white hover:shadow-lg focus:ring-2 focus:ring-offset-2 focus:outline-none"
@@ -213,15 +213,8 @@ Works with Tailwind v4+
 
 ### Framework Support
 
-| Framework | Setup |
-|---|---|
-| Next.js | `tw-variant` - `withTwVariant()` in `next.config.ts` |
-| Vite + React | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
-| Vue / Nuxt | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
-| Svelte / SvelteKit | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
-| Solid.js / SolidStart | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
-| Astro | `tw-variant` - `twVariant()` plugin in `vite.config.ts` |
-| Any other | `npx tw-variant-extract` CLI |
+
+Next.js, Vite + React, Vue / Nuxt, Svelte / SvelteKit, Solid.js, Astro
 
 ---
 
@@ -256,10 +249,10 @@ export const cardHover: VariantMap = {
   hover: "shadow-xl -translate-y-1 border-blue-300",
   focus: "ring-2 ring-blue-400",
   dark: "bg-gray-800"
-}
+};
 
 // Then use anywhere
-export const cardClasses = tv(cardHover)
+export const cardClasses = tv(cardHover);
 ```
 
 ---
@@ -289,10 +282,10 @@ A: No. All extraction and CSS generation happens at build time.
 
 ```ts
 // ✅ works
-tv({ hover: "bg-blue-500 text-white" })
+tv({ hover: "bg-blue-500 text-white" });
 
 // ❌ won't work — dynamic value
-tv({ hover: isActive ? "bg-blue-500" : "bg-red-500" })
+tv({ hover: isActive ? "bg-blue-500" : "bg-red-500" });
 ```
 
 For dynamic classes, use `clsx` alongside `tv()`:
