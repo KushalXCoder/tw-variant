@@ -51,7 +51,11 @@ const nextConfig: NextConfig = {
   // your existing config
 }
 
+// Watch all folders (default)
 module.exports = withTwVariant(nextConfig);
+
+// Or, only watch specific folders:
+// module.exports = withTwVariant(nextConfig, { dirs: ['src', 'app'] });
 ```
 
 The extractor runs automatically on dev start and before every production build. No separate terminal, no extra scripts.
@@ -67,7 +71,13 @@ import { twVariant } from 'tw-variant/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  plugins: [twVariant()]
+  plugins: [
+    // Watch all folders (default)
+    twVariant(),
+
+    // Or, only watch specific folders:
+    // twVariant({ dirs: ['src', 'app'] })
+  ]
 });
 ```
 
