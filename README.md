@@ -17,7 +17,15 @@
 
 Visit the NPM package here - https://www.npmjs.com/package/tw-variant
 
+<p>
+  Web docs coming soon, till then refer the README below : )
+</p>
+
 </div>
+
+---
+
+<img width="1279" height="401" alt="image" src="https://github.com/user-attachments/assets/5938c0dc-7be5-4051-bae5-e5673766d27c" />
 
 ---
 
